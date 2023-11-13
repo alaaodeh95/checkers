@@ -16,8 +16,8 @@ const GameBoard: React.FC = () => {
     useEffect(() => {
         if (aiMoves.length > 0) {
             aiMoves.forEach((move, idx) => {
-                setTimeout(() => dispatch(handleSquareClick(move.from)), idx*500);
-                setTimeout(() => dispatch(handleSquareClick(move.to)), idx*500 + 500);
+                setTimeout(() => dispatch(handleSquareClick(move.from)), idx * 500);
+                setTimeout(() => dispatch(handleSquareClick(move.to)), idx * 500 + 500);
             });
             dispatch(setAIMoves([]));
         }
@@ -38,9 +38,7 @@ const GameBoard: React.FC = () => {
                                     className={`piece ${square.piece.toString().includes('player1') ? 'player1-piece' : 'player2-piece'} ${square.piece.toString().includes('King') ? 'king' : ''} ${
                                         square.location === selectedSquare?.location ? 'selected' : ''
                                     } ${movablePieces.some((piece) => piece.from === square.location) ? 'with-border' : ''}`}
-                                >
-                                    {square.piece.toString().includes('King') ? 'K' : ''}
-                                </div>
+                                />
                             )}
                         </div>
                     ))}

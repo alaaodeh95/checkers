@@ -3,8 +3,8 @@ import { getDifficulty, getMode, getMovablePieces, getPlayerOnSquare, getSelecte
 import { ActionFn } from '../store/store';
 import { highlightMoves, makeMove } from './moves';
 import { difficultyToDepth, isSameCords } from '../../utils/game';
-import { Mode, Player } from '../../types/gameTypes';
-import { alphaBetaSearch, Node } from '../../AI';
+import { Mode, Player, Node } from '../../types/gameTypes';
+import { alphaBetaSearch } from '../../AI';
 
 export const handleSquareClick =
     (cords: [number, number], e?: React.MouseEvent<HTMLDivElement, MouseEvent>): ActionFn =>

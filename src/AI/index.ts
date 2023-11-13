@@ -1,2 +1,2 @@
 export * from './aplhaBeta';
-export * from './Node';
+export * from './evaluate';

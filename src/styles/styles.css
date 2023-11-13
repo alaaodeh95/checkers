@@ -86,15 +86,25 @@ html, body {
 
 
 .player1-piece {
-  background-color: rgba(0, 0, 0, 0.75);
+  /*background-color: rgba(0, 0, 0, 0.75);*/
+  background-image: url('../../public/player1.jpg');
+  background-size: 110% 110%;
+  background-position: center;
 }
 
 .player2-piece {
-  background-color: brown;
+  /*background-color: brown;*/
+  background-image: url('../../public/player2.jpg');
+  background-size: 110% 110%;
+  background-position: center;
 }
 
-.king {
-  font-size: 32px;
+.player1-piece.king {
+  background-image: url('../../public/player1King.jpg');
+}
+
+.player2-piece.king {
+  background-image: url('../../public/player2King.jpg');
 }
 
 .highlighted {
@@ -112,6 +122,7 @@ html, body {
 
 .selected {
   background-color: antiquewhite;
+  background-image: none
 }
 
 @media screen and (max-width: 800px) {

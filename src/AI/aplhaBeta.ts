@@ -1,9 +1,9 @@
-import { AIMove } from '../types/gameTypes';
-import { generateChildNodes, isGameEnded, Node, evaluateBoard } from './Node';
+import { AIMove, Node } from '../types/gameTypes';
+import { generateChildNodes, isGameEnded, evaluateBoard } from './evaluate';
 
 export const alphaBetaSearch = (node: Node, depth: number, alpha: number, beta: number, maximizingPlayer: boolean): [AIMove[], number] => {
     if (depth === 0 || isGameEnded(node)) {
-        return [[], evaluateBoard(node)]; // Return the evaluation at the leaf node
+        return [node.moves, evaluateBoard(node)]; // Return the evaluation at the leaf node
     }
 
     let bestMove: AIMove[] = [];

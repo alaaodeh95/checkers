@@ -41,6 +41,12 @@ export interface AIMove {
 
 export type Board = Square[][];
 
+export type Node = {
+    board: Board;
+    currentPlayer: Player;
+    moves: AIMove[];
+};
+
 export interface GameState {
     board: Board;
     difficulty: Difficulty;
