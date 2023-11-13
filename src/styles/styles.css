@@ -1,0 +1,125 @@
+/* styles.css */
+
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  background-image: url('../../public/background.jpg');
+  background-size: 100% 100%;
+  background-position: center;
+}
+
+#root {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center; /* Align horizontal */
+  align-items: center; 
+}
+
+.row {
+  display: flex;
+}
+
+
+.game-board {
+  display: flex;
+  flex-direction: column-reverse;
+  width: fit-content;
+  position: relative;
+  /* Set the width and height of your game board here */
+  width: 600px;
+  height: 600px;
+  background-image: url('../../public/board.jpg');
+  background-size: 100% 100%;
+  background-position: center;
+}
+
+.square {
+  width: 75px;
+  height: 75px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/*
+.light-square {
+  background-color: #eedcb3;
+}
+
+.dark-square {
+  background-color: #b58863;
+}
+*/
+
+.piece {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36px;
+  font-weight: bold;
+  color: white;
+  /* Default border styles */
+  border: 2px solid transparent; /* Add a transparent border by default */
+}
+
+.with-border {
+  border-color: antiquewhite; /* Red border color for player 1 */
+  animation: pulse-border 1.5s infinite ease-in-out;
+}
+
+@keyframes pulse-border {
+  0%, 100% {
+    border-width: 2px;
+  }
+  10%, 90% {
+    border-width: 2.5px;
+  }
+  20%, 80% {
+    border-width: 3px;
+  }
+  30%, 70% {
+    border-width: 3.5px;
+  }
+  40%, 60% {
+    border-width: 4px;
+  }
+  50% {
+    border-width: 4.5px;
+  }
+}
+
+.player1-piece {
+  background-color: rgba(0, 0, 0, 0.75);
+}
+
+.player2-piece {
+  background-color: brown;
+}
+
+.king {
+  font-size: 32px;
+}
+
+.highlighted {
+  animation: blink-background 1s infinite ease-in-out;
+}
+
+@keyframes blink-background {
+  0%, 100% {
+  }
+  50% {
+    background-color: white;
+
+  }
+}
+
+.selected {
+  background-color: antiquewhite;
+}
