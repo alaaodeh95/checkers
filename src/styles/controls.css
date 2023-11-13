@@ -53,3 +53,34 @@
   color: white;
   font-size: 30px;
 }
+
+
+@media screen and (max-width: 800px) {
+  .game-controls {
+    padding: 10px;
+    width: 380px; /* Max width of 600px */
+  }
+  
+  
+  .game-controls select {
+    padding: 3px 6px;
+    margin-right: 7px;
+  }
+  
+  .game-controls button {
+    padding: 3px 10px;
+    border-radius: 3px;
+    margin-right: 7px;
+    width: 70px;
+    height: 20px;
+  }
+  
+  .game-controls .player-section span {
+    margin-left: 7px;
+  }
+  
+  .player-section{
+    font-size: 15px;
+  }
+}
+

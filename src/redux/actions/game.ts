@@ -7,15 +7,22 @@ import { Mode, Player } from '../../types/gameTypes';
 import { alphaBetaSearch, Node } from '../../AI';
 
 export const handleSquareClick =
-    (cords: [number, number]): ActionFn =>
+    (cords: [number, number], e?: React.MouseEvent<HTMLDivElement, MouseEvent>): ActionFn =>
     (dispatch, getState) => {
+        const state = getState();
         const {
             game: { turn: currentPlayer, board },
-        } = getState();
+        } = state;
         const square = getSquare(cords)(board);
         const playerOnSquare = getPlayerOnSquare(cords)(board);
-        const selected = getSelected(getState());
+        const selected = getSelected(state);
         const movablePieces = getMovablePieces(board, currentPlayer);
+        const mode = getMode(state);
+
+        // Clicking on bot squares
+        if (mode === Mode.OnePlayer && currentPlayer === Player.Player2 && e) {
+            return;
+        }
 
         // Unselect
         if (selected !== null && isSameCords(selected.location, cords)) {

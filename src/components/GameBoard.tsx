@@ -15,9 +15,9 @@ const GameBoard: React.FC = () => {
 
     useEffect(() => {
         if (aiMoves.length > 0) {
-            aiMoves.forEach((move) => {
-                dispatch(handleSquareClick(move.from));
-                setTimeout(() => dispatch(handleSquareClick(move.to)), 500);
+            aiMoves.forEach((move, idx) => {
+                setTimeout(() => dispatch(handleSquareClick(move.from)), idx*500);
+                setTimeout(() => dispatch(handleSquareClick(move.to)), idx*500 + 500);
             });
             dispatch(setAIMoves([]));
         }
@@ -30,7 +30,7 @@ const GameBoard: React.FC = () => {
                     {row.map((square, colIndex) => (
                         <div
                             key={colIndex}
-                            onClick={() => dispatch(handleSquareClick([rowIndex, colIndex]))}
+                            onClick={(e) => dispatch(handleSquareClick([rowIndex, colIndex], e))}
                             className={`square ${square.isHighlighted ? 'highlighted' : ''} ${(rowIndex + colIndex) % 2 === 0 ? 'light-square' : 'dark-square'}`}
                         >
                             {square.piece && (

@@ -9,6 +9,7 @@ html, body {
   background-image: url('../../public/background.jpg');
   background-size: 100% 100%;
   background-position: center;
+  background-repeat: repeat;
 }
 
 #root {
@@ -71,29 +72,18 @@ html, body {
 
 .with-border {
   border-color: antiquewhite; /* Red border color for player 1 */
-  animation: pulse-border 1.5s infinite ease-in-out;
+  animation: pulse-border 0.75s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
 
 @keyframes pulse-border {
   0%, 100% {
     border-width: 2px;
   }
-  10%, 90% {
-    border-width: 2.5px;
-  }
-  20%, 80% {
-    border-width: 3px;
-  }
-  30%, 70% {
-    border-width: 3.5px;
-  }
-  40%, 60% {
-    border-width: 4px;
-  }
   50% {
-    border-width: 4.5px;
+    border-width: 5px;
   }
 }
+
 
 .player1-piece {
   background-color: rgba(0, 0, 0, 0.75);
@@ -122,4 +112,22 @@ html, body {
 
 .selected {
   background-color: antiquewhite;
+}
+
+@media screen and (max-width: 800px) {
+  .game-board {
+    width: 400px; /* Make the game board take up the full width */
+    height: 400px; /* Adjust the height automatically */
+  }
+
+  .square {
+    width: 50px; /* Each square takes up 10% of the game board width */
+    height: 50px; /* Height is the same as width to maintain aspect ratio */
+  }
+
+  .piece {
+    width: 80%; /* Pieces take up a smaller portion of the square */
+    height: 80%;
+    font-size: 16px; /* Smaller font size for pieces */
+  }
 }
