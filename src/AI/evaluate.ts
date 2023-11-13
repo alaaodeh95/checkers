@@ -64,7 +64,7 @@ export const evaluateBoard = (node: Node, movesCount: number, config = evaluatio
 
                 if (square.piece.id === PieceId.Player2King) {
                     // Penalize if the king's position has been repeated
-                    const positionRepeats = countSpecificPairOccurrences(square.piece.locationHistory, square.location);
+                    const positionRepeats = countSpecificPairOccurrences(square.piece.locationHistory, square.location, 6);
                     if (positionRepeats > 1) {
                         score -= 0.5 * positionRepeats;
                     }

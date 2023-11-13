@@ -1,6 +1,6 @@
 import { getWinner } from '../redux/selectors';
 import { AIMove, Node, Player } from '../types/gameTypes';
-import { generateChildNodes, evaluateBoard } from './evaluate';
+import { evaluateBoard, generateChildNodes } from './evaluate';
 
 export const alphaBetaSearch = (node: Node, depth: number, alpha: number, beta: number, maximizingPlayer: boolean, movesCount: number): [AIMove[], number] => {
     const winner = getWinner(node.currentPlayer, node.board);

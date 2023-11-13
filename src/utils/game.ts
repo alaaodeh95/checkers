@@ -16,5 +16,5 @@ export const difficultyToDepth = (difficulty: Difficulty) => {
 };
 export const clone = <T>(obj: T): T => JSON.parse(JSON.stringify(obj));
 
-export const countSpecificPairOccurrences = (arr: [number, number][], x: [number, number]): number => 
-    arr.reduce((acc, pair) => acc + (pair[0] === x[0] && pair[1] === x[1] ? 1 : 0), 0);
+export const countSpecificPairOccurrences = (arr: [number, number][], x: [number, number], last: number): number =>
+    arr.slice(-last).reduce((acc, pair) => acc + (pair[0] === x[0] && pair[1] === x[1] ? 1 : 0), 0);
