@@ -1,9 +1,14 @@
-export enum Piece {
+export enum PieceId {
     Player1 = 'player1',
     Player1King = 'player1King',
     Player2 = 'player2',
     Player2King = 'player2King',
     Null = '',
+}
+
+export interface Piece {
+    id: PieceId;
+    locationHistory: [number, number][];
 }
 
 export enum Difficulty {
@@ -55,4 +60,5 @@ export interface GameState {
     selected: Square | null;
     extraMove: Moves | null;
     aiMoves: AIMove[];
+    movesCount: number;
 }

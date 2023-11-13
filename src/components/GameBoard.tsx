@@ -33,11 +33,11 @@ const GameBoard: React.FC = () => {
                             onClick={(e) => dispatch(handleSquareClick([rowIndex, colIndex], e))}
                             className={`square ${square.isHighlighted ? 'highlighted' : ''} ${(rowIndex + colIndex) % 2 === 0 ? 'light-square' : 'dark-square'}`}
                         >
-                            {square.piece && (
+                            {square.piece.id && (
                                 <div
-                                    className={`piece ${square.piece.toString().includes('player1') ? 'player1-piece' : 'player2-piece'} ${square.piece.toString().includes('King') ? 'king' : ''} ${
-                                        square.location === selectedSquare?.location ? 'selected' : ''
-                                    } ${movablePieces.some((piece) => piece.from === square.location) ? 'with-border' : ''}`}
+                                    className={`piece ${square.piece.id.toString().includes('player1') ? 'player1-piece' : 'player2-piece'} ${
+                                        square.piece.id.toString().includes('King') ? 'king' : ''
+                                    } ${square.location === selectedSquare?.location ? 'selected' : ''} ${movablePieces.some((piece) => piece.from === square.location) ? 'with-border' : ''}`}
                                 />
                             )}
                         </div>

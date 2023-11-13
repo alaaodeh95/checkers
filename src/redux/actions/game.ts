@@ -1,5 +1,5 @@
 import { resetHighlights, setAIMoves, setSelected } from '../reducers/gameSlice';
-import { getDifficulty, getMode, getMovablePieces, getPlayerOnSquare, getSelected, getSquare, getTurn, getWinner } from '../selectors';
+import { getDifficulty, getMode, getMovablePieces, getMovesCount, getPlayerOnSquare, getSelected, getSquare, getTurn, getWinner } from '../selectors';
 import { ActionFn } from '../store/store';
 import { highlightMoves, makeMove } from './moves';
 import { difficultyToDepth, isSameCords } from '../../utils/game';
@@ -58,8 +58,9 @@ export const handleSwitchTurn = (): ActionFn => async (dispatch, getState) =>
             const state = getState();
             const mode = getMode(state);
             const currentPlayer = getTurn(state);
-            const winner = getWinner(state);
+            const winner = getWinner(currentPlayer, state.game.board);
             const depth = difficultyToDepth(getDifficulty(state));
+            const movesCount = getMovesCount(state);
 
             // Skip switch turn if not AI turn or if game ended
             if (mode === Mode.TwoPlayers || currentPlayer === Player.Player1 || winner !== null) {
@@ -67,7 +68,7 @@ export const handleSwitchTurn = (): ActionFn => async (dispatch, getState) =>
             }
 
             const node: Node = { board: state.game.board, moves: [], currentPlayer };
-            const [moves] = alphaBetaSearch(node, depth, Number.NEGATIVE_INFINITY, Number.POSITIVE_INFINITY, true);
+            const [moves] = alphaBetaSearch(node, depth, Number.NEGATIVE_INFINITY, Number.POSITIVE_INFINITY, true, movesCount);
             dispatch(setAIMoves(moves));
             resolve();
         };

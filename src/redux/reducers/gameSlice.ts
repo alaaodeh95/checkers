@@ -10,6 +10,7 @@ export const initialGameState: GameState = {
     selected: null,
     extraMove: null,
     aiMoves: [],
+    movesCount: 0,
 };
 
 export const gameSlice = createSlice({
@@ -45,9 +46,12 @@ export const gameSlice = createSlice({
         setAIMoves: (state, action: PayloadAction<AIMove[]>) => {
             state.aiMoves = action.payload;
         },
+        incrementMovesCount: (state) => {
+            state.movesCount++;
+        },
         resetGame: () => initialGameState,
     },
 });
 
-export const { setTurn, setDifficulty, setMode, setSelected, highlightSquare, resetHighlights, setSquare, setExtraMove, setAIMoves, resetGame } = gameSlice.actions;
+export const { setTurn, setDifficulty, setMode, setSelected, highlightSquare, resetHighlights, setSquare, setExtraMove, setAIMoves, incrementMovesCount, resetGame } = gameSlice.actions;
 export const gameReducer = gameSlice.reducer;

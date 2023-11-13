@@ -1,8 +1,6 @@
 import { exploreMove, getMovablePieces } from '../redux/selectors';
-import { Piece, Node } from '../types/gameTypes';
-import { clone, switchPlayers } from '../utils/game';
-
-export const isGameEnded = (node: Node) => node.board.flatMap((x) => x).filter((square) => square.piece !== Piece.Null).length === 1;
+import { Node, PieceId } from '../types/gameTypes';
+import { clone, switchPlayers, countSpecificPairOccurrences } from '../utils/game';
 
 export const generateChildNodes = (node: Node): Node[] => {
     const children: Node[] = [];
@@ -29,29 +27,46 @@ export const evaluationConfig = {
         player2: 1, // AI's regular piece
         player2King: 3, // AI's king
     },
+    botInitialRow: 7,
 };
 
-export const evaluateBoard = (node: Node, config = evaluationConfig) => {
+export const evaluateBoard = (node: Node, movesCount: number, config = evaluationConfig) => {
     let score = 0;
 
     node.board.forEach((row, rowIdx) => {
         row.forEach((square) => {
-            if (square.piece !== Piece.Null) {
+            if (square.piece.id !== PieceId.Null) {
                 // Basic material value
-                score += config.pieceValue[square.piece];
+                score += config.pieceValue[square.piece.id];
+
+                // Control of center
+                if (config.centerRows.includes(rowIdx)) {
+                    score += square.piece.id === PieceId.Player2 ? config.centerWeight : -config.centerWeight;
+                }
 
                 // Check if the piece is a regular piece (not a king)
-                if (square.piece === Piece.Player1 || square.piece === Piece.Player2) {
+                if (square.piece.id === PieceId.Player1 || square.piece.id === PieceId.Player2) {
                     // Positional value for nearing king row (only for non-kings)
-                    if (square.piece === Piece.Player2 && rowIdx === node.board.length - 1) {
+                    if (square.piece.id === PieceId.Player2 && rowIdx === node.board.length - 1) {
                         score += config.nearingKingingWeight; // Bot piece nearing kinging
-                    } else if (square.piece === Piece.Player1 && rowIdx === 0) {
+                    } else if (square.piece.id === PieceId.Player1 && rowIdx === 0) {
                         score -= config.nearingKingingWeight; // Player1 piece nearing kinging
                     }
 
-                    // Control of center
-                    if (config.centerRows.includes(rowIdx)) {
-                        score += square.piece === Piece.Player2 ? config.centerWeight : -config.centerWeight;
+                    // Additional logic for initial position penalty
+                    if (movesCount > 10) {
+                        // Assuming the penalty starts after 10 moves
+                        if (square.piece.id === PieceId.Player2 && rowIdx === config.botInitialRow) {
+                            score -= 0.2; // Apply a penalty
+                        }
+                    }
+                }
+
+                if (square.piece.id === PieceId.Player2King) {
+                    // Penalize if the king's position has been repeated
+                    const positionRepeats = countSpecificPairOccurrences(square.piece.locationHistory, square.location);
+                    if (positionRepeats > 1) {
+                        score -= 0.5 * positionRepeats;
                     }
                 }
             }

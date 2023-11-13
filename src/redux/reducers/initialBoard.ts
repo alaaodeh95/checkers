@@ -1,11 +1,11 @@
-import { Board, Piece } from '../../types/gameTypes';
+import { Board, Piece, PieceId } from '../../types/gameTypes';
 
 const createInitialPiece = (row: number, col: number): Piece => {
     if (row % 2 !== col % 2) {
-        if (row < 3) return Piece.Player1;
-        if (row > 4) return Piece.Player2;
+        if (row < 3) return { id: PieceId.Player1, locationHistory: [[row, col]]};
+        if (row > 4) return { id: PieceId.Player2, locationHistory: [[row, col]]};
     }
-    return Piece.Null;
+    return {id: PieceId.Null, locationHistory: []};
 };
 
 const initialBoard: Board = Array.from({ length: 8 }, (_, rowIndex) =>

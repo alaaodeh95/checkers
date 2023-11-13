@@ -6,7 +6,7 @@ import '../styles/endgame.css';
 
 export const WinnerScreen = () => {
     const dispatch = useAppDispatch();
-    const winner = useAppSelector(getWinner);
+    const winner = useAppSelector((state) => getWinner(state.game.turn, state.game.board));
     const mode = useAppSelector(getMode);
 
     return (

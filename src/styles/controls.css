@@ -5,7 +5,6 @@
   padding: 20px;
   background-color: rgba(0, 0, 0, 0.3); /* Transparent black */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  width: 560px; /* Max width of 600px */
 }
 
 .game-controls .control-section, .game-controls .player-section {
@@ -58,7 +57,6 @@
 @media screen and (max-width: 800px) {
   .game-controls {
     padding: 10px;
-    width: 380px; /* Max width of 600px */
   }
   
   

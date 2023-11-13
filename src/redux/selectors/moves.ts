@@ -1,7 +1,7 @@
 import { getIsKing, getPlayerOnSquare, isOpponentOnSquare, getExtraMove } from '.';
 import { MAX_BOARD, MIN_BOARD } from '../../constants/constants';
-import { AIMove, Board, Piece, Player } from '../../types/gameTypes';
-import { isInRange, isSameCords } from '../../utils/game';
+import { AIMove, Board, PieceId, Player } from '../../types/gameTypes';
+import { clone, isInRange, isSameCords } from '../../utils/game';
 import { RootState } from '../store/store';
 
 export const getMoves = (cords: [number, number], player: Player) => (board: Board) => {
@@ -98,7 +98,8 @@ export const exploreMove = (from: [number, number], to: [number, number], board:
     const isNewKing = !wasKing && isKing;
 
     // Empty from square
-    board[from[0]][from[1]] = { location: from, piece: Piece.Null};
+    const movedPieceLocationHistory = clone(board[from[0]][from[1]].piece.locationHistory);
+    board[from[0]][from[1]] = { location: from, piece: { id: PieceId.Null, locationHistory: [] } };
 
     // Kill any checker inbetween
     const shouldKill = Math.abs(from[0] - to[0]) === 2;
@@ -107,12 +108,12 @@ export const exploreMove = (from: [number, number], to: [number, number], board:
         const [x1, y1] = to;
         const deadX = x0 < x1 ? x0 + 1 : x0 - 1;
         const deadY = y0 < y1 ? y0 + 1 : y0 - 1;
-        board[deadX][deadY] = { location: from, piece: Piece.Null};
+        board[deadX][deadY] = { location: from, piece: { id: PieceId.Null, locationHistory: [] } };
     }
 
     // Move to next square
-    const newPieceType = currentPlayer === Player.Player1 ? (isKing ? Piece.Player1King : Piece.Player1) : isKing ? Piece.Player2King : Piece.Player2;
-    board[to[0]][to[1]] = { location: to, piece: newPieceType};
+    const newPieceType = currentPlayer === Player.Player1 ? (isKing ? PieceId.Player1King : PieceId.Player1) : isKing ? PieceId.Player2King : PieceId.Player2;
+    board[to[0]][to[1]] = { location: to, piece: { id: newPieceType, locationHistory: movedPieceLocationHistory } };
     moves.push({ from, to });
 
     // If not a new king and the last move caused a kill, try to progress
@@ -124,5 +125,5 @@ export const exploreMove = (from: [number, number], to: [number, number], board:
         }
     }
 
-    return {board, moves};
+    return { board, moves };
 };

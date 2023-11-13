@@ -1,9 +1,13 @@
-import { AIMove, Node } from '../types/gameTypes';
-import { generateChildNodes, isGameEnded, evaluateBoard } from './evaluate';
+import { getWinner } from '../redux/selectors';
+import { AIMove, Node, Player } from '../types/gameTypes';
+import { generateChildNodes, evaluateBoard } from './evaluate';
 
-export const alphaBetaSearch = (node: Node, depth: number, alpha: number, beta: number, maximizingPlayer: boolean): [AIMove[], number] => {
-    if (depth === 0 || isGameEnded(node)) {
-        return [node.moves, evaluateBoard(node)]; // Return the evaluation at the leaf node
+export const alphaBetaSearch = (node: Node, depth: number, alpha: number, beta: number, maximizingPlayer: boolean, movesCount: number): [AIMove[], number] => {
+    const winner = getWinner(node.currentPlayer, node.board);
+    if (depth === 0) {
+        return [node.moves, evaluateBoard(node, movesCount)]; // Return the evaluation at the leaf node
+    } else if (winner) {
+        return [node.moves, winner === Player.Player1 ? Number.MIN_VALUE : Number.MAX_VALUE]; // Game over
     }
 
     let bestMove: AIMove[] = [];
@@ -11,7 +15,7 @@ export const alphaBetaSearch = (node: Node, depth: number, alpha: number, beta: 
 
     if (maximizingPlayer) {
         for (const child of generateChildNodes(node)) {
-            const [, childEval] = alphaBetaSearch(child, depth - 1, alpha, beta, false);
+            const [, childEval] = alphaBetaSearch(child, depth - 1, alpha, beta, false, movesCount);
             if (childEval > bestEval) {
                 bestEval = childEval;
                 bestMove = child.moves; // Assuming `child` has a `move` attribute representing the action taken
@@ -23,7 +27,7 @@ export const alphaBetaSearch = (node: Node, depth: number, alpha: number, beta: 
         }
     } else {
         for (const child of generateChildNodes(node)) {
-            const [, childEval] = alphaBetaSearch(child, depth - 1, alpha, beta, true);
+            const [, childEval] = alphaBetaSearch(child, depth - 1, alpha, beta, true, movesCount);
             if (childEval < bestEval) {
                 bestEval = childEval;
                 bestMove = child.moves; // Assuming `child` has a `move` attribute representing the action taken

@@ -7,11 +7,14 @@ export const switchPlayers = (player: Player) => (player === Player.Player1 ? Pl
 export const difficultyToDepth = (difficulty: Difficulty) => {
     switch (difficulty) {
         case Difficulty.Easy:
-            return 2;
+            return 1;
         case Difficulty.Medium:
-            return 4;
+            return 3;
         case Difficulty.Hard:
-            return 6;
+            return 5;
     }
 };
 export const clone = <T>(obj: T): T => JSON.parse(JSON.stringify(obj));
+
+export const countSpecificPairOccurrences = (arr: [number, number][], x: [number, number]): number => 
+    arr.reduce((acc, pair) => acc + (pair[0] === x[0] && pair[1] === x[1] ? 1 : 0), 0);
