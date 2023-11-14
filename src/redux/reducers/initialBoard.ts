@@ -1,7 +1,7 @@
 import { Board, Piece, PieceId } from '../../types/gameTypes';
 
 const createInitialPiece = (row: number, col: number): Piece => {
-    if (row % 2 !== col % 2) {
+    if (row % 2 === col % 2) {
         if (row < 3) return { id: PieceId.Player1 };
         if (row > 4) return { id: PieceId.Player2 };
     }
