@@ -1,4 +1,4 @@
-import { Board, Player } from '../../types/gameTypes';
+import { Board, PieceId, Player } from '../../types/gameTypes';
 import { RootState } from '../store/store';
 import { getMovablePieces } from './moves';
 
@@ -14,6 +14,15 @@ export const getAIMoves = (state: RootState) => state.game.aiMoves;
 export const getSquare = (cords: [number, number]) => (board: Board) => board[cords[0]][cords[1]];
 export const getIsKing = (cords: [number, number]) => (board: Board) => getSquare(cords)(board).piece.id.toString().includes('King');
 export const getMovesCount = (state: RootState) => state.game.movesCount;
+export const getNumberOfPieces =  (state: RootState) => {
+    const pieces = state.game.board.flatMap(row => row).map(square => square.piece.id);
+    return {
+        player1: pieces.filter( id => id === PieceId.Player1).length,
+        player1King: pieces.filter( id => id === PieceId.Player1King).length,
+        player2: pieces.filter( id => id === PieceId.Player2).length,
+        player2King: pieces.filter( id => id === PieceId.Player2King).length,
+    }
+}
 export const getPlayerOnSquare = (cords: [number, number]) => (board: Board) => {
     const piece = getSquare(cords)(board).piece.id.toString();
     return piece.startsWith(Player.Player1) ? Player.Player1 : piece.startsWith(Player.Player2) ? Player.Player2 : null;

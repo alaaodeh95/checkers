@@ -3,6 +3,7 @@ import GameBoard from './components/GameBoard';
 import GameControls from './components/GameControls';
 import './styles/styles.css';
 import LoadingScreen from './components/LoadingScreen';
+import PieceCounter from './components/PieceCounter';
 
 function App() {
     const [isLoading, setIsLoading] = useState(true);
@@ -13,6 +14,7 @@ function App() {
             {isLoading && <LoadingScreen />}
             <GameControls />
             <GameBoard />
+            <PieceCounter />
         </div>
     );
 }

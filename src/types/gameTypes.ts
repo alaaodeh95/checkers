@@ -8,7 +8,7 @@ export enum PieceId {
 
 export interface Piece {
     id: PieceId;
-    locationHistory: [number, number][];
+    locationHistory?: [number, number][];
 }
 
 export enum Difficulty {

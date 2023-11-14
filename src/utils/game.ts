@@ -9,9 +9,9 @@ export const difficultyToDepth = (difficulty: Difficulty) => {
         case Difficulty.Easy:
             return 1;
         case Difficulty.Medium:
-            return 3;
+            return 4;
         case Difficulty.Hard:
-            return 5;
+            return 6;
     }
 };
 export const clone = <T>(obj: T): T => JSON.parse(JSON.stringify(obj));

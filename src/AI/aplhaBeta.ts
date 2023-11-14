@@ -1,6 +1,7 @@
-import { getWinner } from '../redux/selectors';
+import { exploreMove, getMovablePieces, getWinner } from '../redux/selectors';
 import { AIMove, Node, Player } from '../types/gameTypes';
-import { evaluateBoard, generateChildNodes } from './evaluate';
+import { clone, switchPlayers } from '../utils/game';
+import { evaluateBoard } from './evaluate';
 
 export const alphaBetaSearch = (node: Node, depth: number, alpha: number, beta: number, maximizingPlayer: boolean, movesCount: number): [AIMove[], number] => {
     const winner = getWinner(node.currentPlayer, node.board);
@@ -40,4 +41,19 @@ export const alphaBetaSearch = (node: Node, depth: number, alpha: number, beta: 
     }
 
     return [bestMove, bestEval];
+};
+
+const generateChildNodes = (node: Node): Node[] => {
+    const children: Node[] = [];
+
+    getMovablePieces(node.board, node.currentPlayer).forEach((moves) => {
+        const { from, to: destinations } = moves;
+        destinations.forEach((to) => {
+            const { board, moves } = exploreMove(from, to, clone(node.board), node.currentPlayer, []);
+            children.push({ board, moves, currentPlayer: switchPlayers(node.currentPlayer) });
+        });
+    });
+
+    // Generate child nodes by making valid moves
+    return children;
 };

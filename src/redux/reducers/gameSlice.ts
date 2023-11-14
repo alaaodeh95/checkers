@@ -49,7 +49,11 @@ export const gameSlice = createSlice({
         incrementMovesCount: (state) => {
             state.movesCount++;
         },
-        resetGame: () => initialGameState,
+        resetGame: (state) => ({
+            ...initialGameState,
+            difficulty: state.difficulty,
+            mode: state.mode
+        }),
     },
 });
 
